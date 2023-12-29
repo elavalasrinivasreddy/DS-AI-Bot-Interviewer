@@ -1,0 +1,10 @@
+langchain
+streamlit
+Pillow
+python-dotenv
+ipykernel
+transformers
+ipywidgets
+auto-gptq
+optimum
+nvidia-pyindex
