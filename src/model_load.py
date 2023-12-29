@@ -1,6 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM,pipeline,GenerationConfig
 from langchain.llms import HuggingFacePipeline
 from dotenv import load_dotenv
+import streamlit as st
 import os
 
 # loading .env
@@ -9,6 +10,7 @@ load_dotenv()
 MODEL_NAME = os.getenv('MODEL_NAME')
 MODEL_FILE = os.getenv('MODEL_FILE')
 
+@st.cache_resource(show_spinner='Model Loading...')
 def load_model_LC():
 
     # Loading the tokenzier
@@ -40,5 +42,5 @@ def load_model_LC():
                                                 'max_new_tokens':512,
                                                 }
                                 )
-
+    del base_model,tokenizer,model_pipe
     return LC_model
