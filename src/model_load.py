@@ -9,10 +9,11 @@ load_dotenv()
 
 MODEL_NAME = os.getenv('MODEL_NAME')
 MODEL_FILE = os.getenv('MODEL_FILE')
+os.environ['HF_HOME'] = os.getenv('HF_HOME')
 
 @st.cache_resource(show_spinner='Model Loading...')
 def load_model_LC():
-
+    print('Model function is called...')
     # Loading the tokenzier
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME,use_fast=True)
 
@@ -33,7 +34,8 @@ def load_model_LC():
     model_pipe = pipeline(task='text-generation',
                         model=base_model,
                         tokenizer=tokenizer,
-                        generation_config=generation_config
+                        generation_config=generation_config,
+                        device_map='auto'
                         )
 
     # Intergarting the Model into Langchain

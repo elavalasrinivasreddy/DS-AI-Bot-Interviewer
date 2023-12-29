@@ -29,7 +29,7 @@ Below is the interview structure so please follow for each interaction with user
 Here, we are expecting you are not repeating the questions. If you want you can check the conversation history. And also you are not allowed to give any hints to the user. \
 Please try to avoid adding unnecessary things into conversation. Be ethical, trustable and respectful. \
 Just focus on the task I mean Question, Expecting Answer, Providing feedback on Answer and finally providing simplified answer these are the tasks.
-Please be make the output should be related to question only. Do not include the past conversations in present output.
+Please be make sure that output should be related to question only. Do not include the past/previous conversations in present output.
 """
 
 # def get_prompt(instruction, new_system_prompt=DEFAULT_SYSTEM_PROMPT):

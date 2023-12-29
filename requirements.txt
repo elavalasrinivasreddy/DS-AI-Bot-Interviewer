@@ -8,3 +8,4 @@ ipywidgets
 auto-gptq
 optimum
 nvidia-pyindex
+-e .

@@ -1,52 +1,85 @@
 import streamlit as st
 from PIL import Image
-# from model_load import load_model_LC
+from src.model_load import load_model_LC
+from src.helper import Create_LLM_chain
 import time
 
-@st.cache_resource(show_spinner='Model Was Loading')
-def load_m():
-    print('Model was loaded..')
-    time.sleep(15)
-    return 0
+print('==='*20)
 
-def load_page_model(in_st):
+# Read the logo png
+icon_img = Image.open('png_data\icon.png')
+# set the page config
+st.set_page_config(page_title = 'AI Bot Interviewer', # page title
+                page_icon = icon_img, # logo image
+                layout = 'centered', # layout is centered
+                initial_sidebar_state = 'auto' # removing the sidebar {By default it will come}
+                )
+# Set the page Header
+st.title('DS Interview By Llama-2 ')
 
-    # Read the logo png
-    icon_img = Image.open('png_data\icon.png')
-    # set the page config
-    in_st.set_page_config(page_title = 'AI Bot Interviewer', # page title
-                    page_icon = icon_img, # logo image
-                    layout = 'centered', # layout is centered
-                    initial_sidebar_state = 'auto' # removing the sidebar {By default it will come}
-                    )
-    # Set the page Header
-    in_st.title('DS Interview By Llama-2 ')
-    
-    # adding optional topics for the user
-    topic = st.sidebar.radio(
-            "Choose Prefered Topic ",
-            key="topic",
-            index= 0,
-            # on_change = Create_LLM_chain(model_obj=model),
-            horizontal = False,
-            options=["All",
-                    "Statistics",
-                    "Data Cleaning",
-                    "Data Preprocessing",
-                    "Machine Learning",
-                    "Deep Learning",
-                    "Large Language Models",
-                    "Natural Language Models",
-                    "Computer Vision",
-                    ],
-        )
-    
-    print('By default topic selected ...',topic)
-    load_m()
-    return 0
+# Load the model
+model = load_model_LC()
 
-if __name__=="__main__":
+if "prev_topic" not in st.session_state:
+    st.session_state.prev_topic = ""
 
-    load_page_model(st)
-    # model = load_model_LC()
-    print('New Prompt was generated..',st.session_state.topic)
+# adding optional topics for the user
+topic = st.sidebar.radio(
+        "Choose Prefered Topic ",
+        key="topic",
+        index= 0,
+        # on_change = Create_LLM_chain(model_obj=model),
+        horizontal = False,
+        options=["All",
+                "Statistics",
+                "Data Cleaning",
+                "Data Preprocessing",
+                "Machine Learning",
+                "Deep Learning",
+                "Large Language Models",
+                "Natural Language Models",
+                "Computer Vision",
+                ],
+    )
+
+if topic and topic != st.session_state.prev_topic:
+    st.session_state.chain_model = Create_LLM_chain(model_obj=model)
+    print('New Prompt was generated for ...',st.session_state.topic)
+    st.session_state.prev_topic = topic
+    # Initialize chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+# Display chat messages from history on app rerun
+for message in st.session_state.messages:
+    if message["role"] == 'human':
+        avatar = "🕵🏻‍♀️"
+    else:
+        avatar = "🧠"
+    with st.chat_message(message["role"],avatar=avatar):
+        st.markdown(message["content"])
+
+if prompt:= st.chat_input("Typing..."):
+    # display user messages
+    with st.chat_message("human",avatar="🕵🏻‍♀️"):
+        st.markdown(prompt)
+        st.session_state.messages.append({"role": "human","content": prompt})
+
+    # response from LLM
+    with st.chat_message("ai",avatar="🧠"):
+        message_placeholder = st.empty()
+        full_response = ""
+        # generate response from LLM
+        s_t = time.time()
+        with st.spinner('Thinking...'):
+            response = st.session_state.chain_model.predict(user_input=prompt)
+            # response = prompt
+        print('Escaped time for response ',time.time()-s_t)
+        # simulate stream of response with milli seconds delay
+        for chunk in response.split():
+            full_response += chunk + " "
+            time.sleep(0.07)
+            # add a blinking  cursor to simulate typing
+            message_placeholder.markdown(full_response + "▌")
+        message_placeholder.markdown(full_response)
+        st.session_state.messages.append({"role": "ai", "content": full_response})

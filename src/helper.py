@@ -2,10 +2,12 @@ import streamlit as st
 from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import LLMChain
-from prompt_maker import *
+from src.prompt_maker import *
 
 def Create_LLM_chain(model_obj):
-    # print('Button was clicked ',st.session_state.topic)
+
+    print('LLM chain Function is called...')
+
     new_prompt = get_prompt(user_topic=st.session_state.topic,
                             instruction=instruction,
                             system_prompt=system_prompt_V1
