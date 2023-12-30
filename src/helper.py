@@ -10,7 +10,7 @@ def Create_LLM_chain(model_obj):
 
     new_prompt = get_prompt(user_topic=st.session_state.topic,
                             instruction=instruction,
-                            system_prompt=system_prompt_V1
+                            system_prompt=system_prompt
                             )
     # print('\n\n',new_prompt)
     # st.write(new_prompt)

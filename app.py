@@ -27,7 +27,8 @@ if "prev_topic" not in st.session_state:
 #     st.session_state.messages = []
 
 def clear_chat():
-    st.info('Chat History Was Cleared.!', icon="ℹ️")
+    if "messages" in st.session_state:
+        st.info('Chat History Was Cleared.!', icon="ℹ️")
     st.session_state.messages = []
     print('Chat Was Cleared..!')
 
@@ -45,7 +46,7 @@ topic = st.sidebar.radio(
                 "Machine Learning",
                 "Deep Learning",
                 "Large Language Models",
-                "Natural Language Models",
+                "Natural Language Processing",
                 "Computer Vision",
                 ],
     )
