@@ -49,3 +49,7 @@ streamlit run app.py
 --Meta Llama-2
 --HuggingFace Transformers
 ```
+### Sample Web UI snapshot
+```
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+```
