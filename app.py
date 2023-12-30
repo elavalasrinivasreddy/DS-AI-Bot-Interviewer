@@ -23,12 +23,20 @@ model = load_model_LC()
 if "prev_topic" not in st.session_state:
     st.session_state.prev_topic = ""
 
+# if "messages" not in st.session_state:
+#     st.session_state.messages = []
+
+def clear_chat():
+    st.info('Chat History Was Cleared.!', icon="ℹ️")
+    st.session_state.messages = []
+    print('Chat Was Cleared..!')
+
 # adding optional topics for the user
 topic = st.sidebar.radio(
         "Choose Prefered Topic ",
         key="topic",
         index= 0,
-        # on_change = Create_LLM_chain(model_obj=model),
+        # on_change = clear_chat(),
         horizontal = False,
         options=["All",
                 "Statistics",
@@ -42,13 +50,14 @@ topic = st.sidebar.radio(
                 ],
     )
 
+# clear chat button 
+st.sidebar.button("Clear Chat",key='clear_chat',on_click=clear_chat)
+
 if topic and topic != st.session_state.prev_topic:
     st.session_state.chain_model = Create_LLM_chain(model_obj=model)
     print('New Prompt was generated for ...',st.session_state.topic)
     st.session_state.prev_topic = topic
-    # Initialize chat history
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+    clear_chat()
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
