@@ -50,6 +50,4 @@ streamlit run app.py
 --HuggingFace Transformers
 ```
 ### Sample Web UI snapshot
-```
-![alt text](https://github.com/elavalasrinivasreddy/DS-AI-Bot-Interviewer/blob/main/png_data/sample_screenshots/final.png?raw=true)
-```
+![final](https://github.com/elavalasrinivasreddy/DS-AI-Bot-Interviewer/assets/45328855/8ee5093b-c122-4d42-a247-d67bb7382f6d)
