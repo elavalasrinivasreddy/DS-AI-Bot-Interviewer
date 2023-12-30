@@ -51,5 +51,5 @@ streamlit run app.py
 ```
 ### Sample Web UI snapshot
 ```
-![alt text](https://github.com/elavalasrinivasreddy/DS-AI-Bot-Interviewer/blob/main/png_data/sample_screenshots/final.png)
+![alt text](https://github.com/elavalasrinivasreddy/DS-AI-Bot-Interviewer/blob/main/png_data/sample_screenshots/final.png?raw=true)
 ```
